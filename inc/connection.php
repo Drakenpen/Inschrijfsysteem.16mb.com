@@ -5,4 +5,7 @@
 	$mysqlpass = 'rt2Cg+pz6Q';
 	
 	//connection to db
-	$db = new PDO('mysql:host='. $mysqlhost.';dbname='.$mysqldb.';charset=utf8mb4', $mysqluser, $mysqlpass);
+		$db = new PDO('mysql:host='. $mysqlhost.';dbname='.$mysqldb.';charset=utf8mb4', $mysqluser, $mysqlpass);
+		return $db;
+	
+	

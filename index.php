@@ -17,7 +17,9 @@ echo '<p>servername: ftp.inschrijfsysteem.16mb.com</p>';
 echo '<p>gebruikersnaam: u340186610</p>';
 echo '<p>wachtwoord: ******</p>';
 echo '<p>map voor bestanden: /public_html';
-
 ?>
+<p><a href="login.php">Ga naar login</a></p>
+
+
 
 </body>

@@ -6,10 +6,13 @@
 <body>
 
 <pre>
-User Information:
+Activiteiten:
 
-Name: {{ $name }}
-Address: {{ $address }}
+Naam: {{ $name0 }}
+Naam: {{ $name1 }}
+Naam: {{ $name2 }}
+Naam: {{ $name3 }}
+Naam: {{ $name4 }}
 </pre>
 
 </body>
