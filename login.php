@@ -1,69 +1,70 @@
 <?php
-require_once 'inc/blade.php';
-//require 'inc/functions.php';
-require 'inc/connection.php';
-?>
+require_once 'inc/connection.php';
 
-<?
-session_start()
-?>
-
-<?
-if($mysqlhost["login"] == "true") {
-   print "<font size=1 face=verdana>You are logged in";
-}
-else {
-?>
-   
-   <font size=1 face=verdana>
-   <FORM action="login.php" method="post">         
-   Email:<br>         
-   <INPUT type="text" name="username">         
-   <BR>         
-   Wachtwoord:<br>         
-   <INPUT type="password" name="pass"><br>         
-   <input type="submit" value="submit" name="submit">         
-   </form>  
-
-<?
-}
-if(isset($_POST['submit'])) {
-   $email = trim(strtolower($_POST['email']));
-   $password = $_POST['password'];
-   $dead = "false";
-   $message = "<font size=1 face=verdana>Fill in the following fields correctly";
-   if(strlen($email) <= 1 or strlen($email) >=15){
-      $dead = "true";
-      $message .= "Username (2-14)<br>";
-   }
-   if(strlen($password) < 6 or strlen($password) > 20) {
-      $dead = "true";
-      $message .= "Password (6-20)<br>";
-   }
-   if($dead = "false"){
-      include('inc/connection.php');
-      $password = md5($password);
-      $query = mysql_query("SELECT status FROM members WHERE email = '$email' and password = '$password'");
-      $rows = mysql_num_rows($query);         
-      if($rows > 0){         
-         print "<font size=1 face=verdana>Your logged in as " . $email . ",<br> <a href=logout.php>log out.</a><br><a href=memberlist.php>memberlist</a>";         
-             $row = mysql_fetch_assoc($query);
-         $email = mysql_real_escape_string($email);
-         $_SESSION['login']=true;           
-         $_SESSION["email"]=$email;
-         $_SESSION['rank']   = $row['status'];         
-      }
-      else{
-         print "<font size=1 face=verdana>You filled in a wrong password and/or email";
-      }         
-      
-   }
-   else{
-      print $message;
-   }
+if($user->is_loggedin()!="")
+{
+ $user->redirect('home.php');
 }
 
+if(isset($_POST['btn-login']))
+{
+ $gebruikersnaam = $_POST['txt_gebruikersnaam_email'];
+ $email = $_POST['txt_gebruikersnaam_email'];
+ $wachtwoord = $_POST['txt_wachtwoord'];
+  
+ if($user->login($uname,$umail,$upass))
+ {
+  $user->redirect('home.php');
+ }
+ else
+ {
+  $error = "Wrong Details!";
+ } 
+}
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Login : cleartuts</title>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css"  />
+<link rel="stylesheet" href="style.css" type="text/css"  />
+</head>
+<body>
+<div class="container">
+     <div class="form-container">
+        <form method="post">
+            <h2>Sign in.</h2><hr />
+            <?php
+            if(isset($error))
+            {
+                  ?>
+                  <div class="alert alert-danger">
+                      <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?> !
+                  </div>
+                  <?php
+            }
+            ?>
+            <div class="form-group">
+             <input type="text" class="form-control" name="txt_gebruikersnaam_email" placeholder="Username or E mail ID" required />
+            </div>
+            <div class="form-group">
+             <input type="password" class="form-control" name="txt_wachtwoord" placeholder="Your Password" required />
+            </div>
+            <div class="clearfix"></div><hr />
+            <div class="form-group">
+             <button type="submit" name="btn-login" class="btn btn-block btn-primary">
+                 <i class="glyphicon glyphicon-log-in"></i>&nbsp;SIGN IN
+                </button>
+            </div>
+            <br />
+            <label>Don't have account yet ! <a href="registreren.php">Sign Up</a></label>
+        </form>
+       </div>
+</div>
+
+</body>
+</html>
 
 
 // output everything
