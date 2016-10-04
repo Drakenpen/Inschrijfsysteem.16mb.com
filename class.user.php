@@ -8,7 +8,7 @@ class USER
       $this->db = $db;
     }
  
-    public function register($voornaam,$tussenvoegsel,$achernaam,$gebruikersnaam,$email,$wachtwoord)
+    public function register($voornaam,$voorvoegsel,$achernaam,$gebruikersnaam,$email,$wachtwoord)
     {
        try
        {
@@ -39,7 +39,7 @@ class USER
           $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
           if($stmt->rowCount() > 0)
           {
-             if(password_verify($upass, $userRow['wachtwoord']))
+             if(password_verify($wachtwoord, $userRow['wachtwoord']))
              {
                 $_SESSION['user_session'] = $userRow['id'];
                 return true;
