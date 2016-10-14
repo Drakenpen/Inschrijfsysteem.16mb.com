@@ -3,3 +3,9 @@
         "philo/laravel-blade": "3.*"
     }
 }
+
+{
+    "require": {
+		"phpmailer/phpmailer": "~5.2"
+    }
+}
